@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { City } from '../../models/city.model';
 import { WeatherRecord } from '../../models/weather-record.model';
 import { WeatherRecordService } from '../../services/weather-record.service';
-
+import { WeatherService } from '../../services/weather.service';
+import { WeatherDetail } from '../../models/weather.model';
 /*
  * Implementar:
  * HU-03 — Detalle de Ciudad con Clima (Ver TALLER.md Parte B)
@@ -18,7 +19,9 @@ import { WeatherRecordService } from '../../services/weather-record.service';
 })
 export class CityDetailComponent implements OnChanges {
   private weatherRecordService = inject(WeatherRecordService);
-
+  private weatherService = inject(WeatherService);
+  weatherDetail: WeatherDetail | null = null;
+  loading: boolean = false;
   @Input() city!: City;
 
   weatherRecords: WeatherRecord[] = [];
@@ -28,7 +31,14 @@ export class CityDetailComponent implements OnChanges {
       this.weatherRecordService.getRecords(this.city.id)
         .subscribe(records => this.weatherRecords = records);
 
-      // TODO HU-03: Agregar aquí el obtener el clima de la ciudad
+      this.loading = true;
+      
+      this.weatherService.getWeather(this.city.name)
+        .subscribe(weather => {
+          this.weatherDetail = weather;
+          this.loading = false;
+        });
+          // TODO HU-03: Procesar y mostrar el clima de la ciudad
     }
   }
 
