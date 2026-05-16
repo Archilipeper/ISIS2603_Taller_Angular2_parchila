@@ -45,5 +45,15 @@ export class CityDetailComponent implements OnChanges {
   saveWeather(): void {
     // TODO HU-04: Agregar aquí el código para guardar un nuevo registro de clima
     //             Al completar, recarga la lista con weatherRecordService.getRecords(this.city.id).
+    if (this.weatherDetail) {
+      this.weatherRecordService.saveRecord(this.city.id, {
+        tempC: this.weatherDetail.temp_c,
+        condition: this.weatherDetail.condition,
+        humidity: this.weatherDetail.humidity
+      }).subscribe(() => {
+        this.weatherRecordService.getRecords(this.city.id)
+          .subscribe(records => this.weatherRecords = records);
+      });
+    }
   }
 }
