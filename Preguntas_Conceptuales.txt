@@ -1,0 +1,21 @@
+1.	Sobre Observables y Asincronía:
+a.	¿Por qué las peticiones HTTP en Angular devuelven un Observable en lugar de la data directa? ¿Qué diferencia hay frente a una Promise?
+    En angular se recibe un Observable al usar peticiones HTTP porque la información recibida viene en forma de Json lo cual impide que la información llegue directamente. Además, al hacer peticiones HTTP la aplicación tarda en correr la lógica y guardar la información en forma de observable hace que se cree una especie de caja la cual se va llenando de a pocos cuando la aplicación empieza a correrse usando el método ngOnInit(). A diferencia de un Promise, el observable es capaz de emitir errores, 0 valores, 1 valor o muchos a la vez mientras el Promise solo puede emitir uno. En resumen, un Observable puede entregar una lista con varios valores mientras que un Promise es un solo valor.
+
+b.	¿Qué ocurre si un componente llama a un servicio HTTP pero nunca hace .subscribe()? ¿Se ejecuta la petición igualmente?
+    Al hacer una petición HTTP sin usar el .subscribe() la función se ejecutará igualmente, sin embargo no saldrá ningún dato pues una petición HTTP no trae automáticamente los datos como fue explicado en el punto anterior. Sin el .subscribe() cuando llegue la información al Observable la información no se actualizará en la aplicación. 
+
+2.	Sobre Inyección de Dependencias:
+c.	¿Qué ventaja de modularidad da providedIn: 'root' frente a instanciar el servicio manualmente con new CityService() dentro de un componente?
+    Una gran ventaja que trae usar provideIn : 'root' es que genera un menor acoplamiento al usar la inyección de dependencias. Separa perfectamente las responsabilidades del service y del component también generando una clara división por capas que a su tiempo ayuda a tener una mejor estructura en la aplicación. Otra ventaja es que se crea una sola instancia del servicio en toda la aplicación y no ocupa mucho espacio el crear varios objetos de tipo service.
+
+d.	¿Cómo facilitaría la inyección de dependencias la escritura de pruebas unitarias para estos servicios?
+
+
+3.	Sobre Interceptores:
+e.	¿Por qué es mejor centralizar el manejo de errores en HttpInterceptor en lugar de poner bloques try/catch en cada componente?
+f.	Además del manejo de errores, mencione dos casos de uso adicionales para un interceptor.
+
+4.	Sobre el Patrón Maestro-Detalle:
+g.	¿Por qué se usa @Input() para pasar la ciudad a CityDetailComponent en lugar de volver a hacer un GET a /api/cities/{id}?
+h.	Observe que en la respuesta de GET /api/cities, el campo country ya viene como objeto anidado (no solo el countryId). ¿Qué ventaja de diseño tiene esta decisión del backend para el frontend?
