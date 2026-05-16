@@ -10,12 +10,18 @@ c.	¿Qué ventaja de modularidad da providedIn: 'root' frente a instanciar el se
     Una gran ventaja que trae usar provideIn : 'root' es que genera un menor acoplamiento al usar la inyección de dependencias. Separa perfectamente las responsabilidades del service y del component también generando una clara división por capas que a su tiempo ayuda a tener una mejor estructura en la aplicación. Otra ventaja es que se crea una sola instancia del servicio en toda la aplicación y no ocupa mucho espacio el crear varios objetos de tipo service.
 
 d.	¿Cómo facilitaría la inyección de dependencias la escritura de pruebas unitarias para estos servicios?
-
+    La inyección de dependencias ayuda a la escritura de pruebas unitarias pues al separar completamente las responsabilidades y al crear una sola instancia por servicio y componente hace que hacer las pruebas no se vean afectadas por otras cosas y que sean más faciles de resetear.
 
 3.	Sobre Interceptores:
 e.	¿Por qué es mejor centralizar el manejo de errores en HttpInterceptor en lugar de poner bloques try/catch en cada componente?
+    Poner bloques de try/catch en cada componente sería repetir mucho código sacrificando así espacio y eficiencia de la aplicación. Hacer solo el código del HttpInterceptor hace que solo se tenga que escribir código una sola vez el cual después se agrega por inyección de dependencias a los componentes donde se necesita.
+
 f.	Además del manejo de errores, mencione dos casos de uso adicionales para un interceptor.
+    Otros casos en los que se pueden utilizar interceptores so para mostrar loaders y manejar logs.
 
 4.	Sobre el Patrón Maestro-Detalle:
 g.	¿Por qué se usa @Input() para pasar la ciudad a CityDetailComponent en lugar de volver a hacer un GET a /api/cities/{id}?
+    Se utiliza input() porque volver a hacer la función de getCiudades sería repetir código pues etsa información ya se encuentra guardada en un observable dentro de otro Detail.
+
 h.	Observe que en la respuesta de GET /api/cities, el campo country ya viene como objeto anidado (no solo el countryId). ¿Qué ventaja de diseño tiene esta decisión del backend para el frontend?
+    Esto hace que se tengan que hacer menos consultas para poder llegar a determinada información. Traer únicamente el countryId hace que para llegar a la información sobre los países ya existentes en la base de datos sea necesario hacer más consultas que harían la aplicación más lenta y pesada. 
